@@ -4,6 +4,7 @@ import com.burdennn.springframework.bean.UserService;
 import com.burdennn.springframework.beans.factory.config.BeanDefinition;
 import com.burdennn.springframework.beans.factory.BeanFactory;
 import com.burdennn.springframework.beans.factory.support.DefaultListableBeanFactory;
+import com.sun.org.apache.xpath.internal.operations.String;
 import org.junit.Test;
 
 public class CommonTest {
@@ -14,7 +15,7 @@ public class CommonTest {
 
         beanFactory.registerBeanDefinition("userService", new BeanDefinition(UserService.class));
 
-        UserService userService = (UserService) beanFactory.getBean("userService");
+        UserService userService = (UserService) beanFactory.getBean("userService", "burdennn");
         userService.queryUserInfo();
 
         UserService userService1 = (UserService) beanFactory.getBean("userService");
