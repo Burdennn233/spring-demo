@@ -1,17 +1,23 @@
 package com.burdennn.springframework;
 
 import com.burdennn.springframework.bean.UserService;
+import com.burdennn.springframework.beans.factory.config.BeanDefinition;
+import com.burdennn.springframework.beans.factory.BeanFactory;
+import com.burdennn.springframework.beans.factory.support.DefaultListableBeanFactory;
 import org.junit.Test;
 
 public class CommonTest {
 
     @Test
     public void test() {
-        BeanFactory beanFactory = new BeanFactory();
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
-        beanFactory.registerBeanDefinition("userService", new BeanDefinition(new UserService()));
+        beanFactory.registerBeanDefinition("userService", new BeanDefinition(UserService.class));
 
         UserService userService = (UserService) beanFactory.getBean("userService");
         userService.queryUserInfo();
+
+        UserService userService1 = (UserService) beanFactory.getBean("userService");
+        userService1.queryUserInfo();
     }
 }
