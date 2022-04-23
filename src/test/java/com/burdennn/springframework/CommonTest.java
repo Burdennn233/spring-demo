@@ -5,16 +5,25 @@ import com.burdennn.springframework.bean.UserService;
 import com.burdennn.springframework.beans.PropertyValue;
 import com.burdennn.springframework.beans.PropertyValues;
 import com.burdennn.springframework.beans.factory.config.BeanDefinition;
-import com.burdennn.springframework.beans.factory.BeanFactory;
 import com.burdennn.springframework.beans.factory.config.BeanReference;
 import com.burdennn.springframework.beans.factory.support.DefaultListableBeanFactory;
-import com.sun.org.apache.xpath.internal.operations.String;
+import com.burdennn.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import org.junit.Test;
 
 public class CommonTest {
+    @Test
+    public void test_Xml() {
+        DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
+
+        XmlBeanDefinitionReader reader = new XmlBeanDefinitionReader(beanFactory);
+        reader.loadBeanDefinitions("classpath:spring.xml");
+
+        UserService userService = (UserService) beanFactory.getBean("userService", "burdenn");
+        userService.queryUserInfo();
+    }
 
     @Test
-    public void test() {
+    public void test_Origin() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 
         beanFactory.registerBeanDefinition("userDao", new BeanDefinition(UserDao.class));
