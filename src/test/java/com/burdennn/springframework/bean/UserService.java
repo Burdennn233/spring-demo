@@ -4,6 +4,8 @@ public class UserService {
 
     private String name;
 
+    private String location;
+
     private UserDao userDao;
 
     public UserService() {
@@ -14,7 +16,7 @@ public class UserService {
     }
 
     public void queryUserInfo() {
-        System.out.println("UserInfo: " + name);
+        System.out.println("UserInfo: " + name + "location: " + location);
     }
 
     public String getName() {
@@ -31,5 +33,13 @@ public class UserService {
 
     public void setUserDao(UserDao userDao) {
         this.userDao = userDao;
+    }
+
+    public String getLocation() {
+        return location;
+    }
+
+    public void setLocation(String location) {
+        this.location = location;
     }
 }

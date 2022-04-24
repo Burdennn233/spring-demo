@@ -8,9 +8,18 @@ import com.burdennn.springframework.beans.factory.config.BeanDefinition;
 import com.burdennn.springframework.beans.factory.config.BeanReference;
 import com.burdennn.springframework.beans.factory.support.DefaultListableBeanFactory;
 import com.burdennn.springframework.beans.factory.xml.XmlBeanDefinitionReader;
+import com.burdennn.springframework.context.support.ClassPathXmlApplicationContext;
 import org.junit.Test;
 
 public class CommonTest {
+
+    @Test
+    public void test_context_xml() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springPostProcessor.xml");
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        userService.queryUserInfo();
+    }
+
     @Test
     public void test_Xml() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
