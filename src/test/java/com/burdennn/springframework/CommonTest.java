@@ -16,6 +16,7 @@ public class CommonTest {
     @Test
     public void test_context_xml() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springPostProcessor.xml");
+        applicationContext.registerShutdownHook();
         UserService userService = applicationContext.getBean("userService", UserService.class);
         userService.queryUserInfo();
     }

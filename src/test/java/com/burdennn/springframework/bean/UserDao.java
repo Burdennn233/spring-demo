@@ -14,4 +14,14 @@ public class UserDao {
     public String getUserName(String name) {
         return map.get(name);
     }
+
+    public void init() {
+        System.out.println("Init UserDao");
+        map.put("init", "003");
+    }
+
+    public void destroyUserDao() {
+        System.out.println("Destory UserDao");
+        map.clear();
+    }
 }

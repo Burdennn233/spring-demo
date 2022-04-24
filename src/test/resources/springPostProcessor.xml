@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 
 <beans>
-    <bean id="userDao" class="com.burdennn.springframework.bean.UserDao"/>
+    <bean id="userDao" class="com.burdennn.springframework.bean.UserDao" init-method="init" destroy-method="destroyUserDao"/>
 
     <bean id="userService" class="com.burdennn.springframework.bean.UserService">
         <property name="name" value="burdennn"/>
