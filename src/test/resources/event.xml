@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans>
+    <bean class="com.burdennn.springframework.event.ContextClosedEventListener"/>
+
+    <bean class="com.burdennn.springframework.event.CustomEventListener"/>
+
+</beans>

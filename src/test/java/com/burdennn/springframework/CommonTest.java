@@ -1,14 +1,17 @@
 package com.burdennn.springframework;
 
+import com.burdennn.springframework.bean.ProxyBeanFactory;
 import com.burdennn.springframework.bean.UserDao;
 import com.burdennn.springframework.bean.UserService;
 import com.burdennn.springframework.beans.PropertyValue;
 import com.burdennn.springframework.beans.PropertyValues;
+import com.burdennn.springframework.beans.factory.FactoryBean;
 import com.burdennn.springframework.beans.factory.config.BeanDefinition;
 import com.burdennn.springframework.beans.factory.config.BeanReference;
 import com.burdennn.springframework.beans.factory.support.DefaultListableBeanFactory;
 import com.burdennn.springframework.beans.factory.xml.XmlBeanDefinitionReader;
 import com.burdennn.springframework.context.support.ClassPathXmlApplicationContext;
+import com.burdennn.springframework.event.CustomEvent;
 import org.junit.Test;
 
 public class CommonTest {
@@ -22,6 +25,14 @@ public class CommonTest {
 
         System.out.println("ApplicationContextAware: " + userService.getApplicationContext());
         System.out.println("BeanFactory: " + userService.getBeanFactory());
+    }
+
+    @Test
+    public void test_event() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:event.xml");
+        applicationContext.publishEvent(new CustomEvent(applicationContext, 123L, "message"));
+
+        applicationContext.registerShutdownHook();
     }
 
     @Test
