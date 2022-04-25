@@ -16,6 +16,8 @@ public class UserService implements InitializingBean, DisposableBean, BeanNameAw
 
     private UserDao userDao;
 
+    private IUserDao iUserDao;
+
     public UserService() {
     }
 
@@ -25,6 +27,10 @@ public class UserService implements InitializingBean, DisposableBean, BeanNameAw
 
     public void queryUserInfo() {
         System.out.println("UserInfo: " + name + "location: " + location);
+    }
+
+    public void queryIUserInfo() {
+        System.out.println("UserInfo: " + iUserDao.queryUserInfo(name));
     }
 
     public String getName() {

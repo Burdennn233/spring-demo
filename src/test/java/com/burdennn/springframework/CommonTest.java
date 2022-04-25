@@ -25,6 +25,15 @@ public class CommonTest {
     }
 
     @Test
+    public void test_factory_bean() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:springPostProcessor.xml");
+        applicationContext.registerShutdownHook();
+
+        UserService userService = applicationContext.getBean("userService", UserService.class);
+        userService.queryIUserInfo();
+    }
+
+    @Test
     public void test_Xml() {
         DefaultListableBeanFactory beanFactory = new DefaultListableBeanFactory();
 

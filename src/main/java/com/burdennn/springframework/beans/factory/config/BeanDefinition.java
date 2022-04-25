@@ -4,6 +4,16 @@ import com.burdennn.springframework.beans.PropertyValues;
 
 public class BeanDefinition {
 
+    String SCOPE_SINGLETON = ConfigurableBeanFactory.SCOPE_SINGLETON;
+
+    String SCOPE_PROTOTYPE = ConfigurableBeanFactory.SCOPE_PROTOTYPE;
+
+    private boolean singleton = true;
+
+    private boolean prototype = false;
+
+    private String scope = SCOPE_SINGLETON;
+
     private Class beanClass;
 
     private PropertyValues propertyValues;
@@ -20,6 +30,20 @@ public class BeanDefinition {
     public BeanDefinition(Class beanClass, PropertyValues propertyValues) {
         this.beanClass = beanClass;
         this.propertyValues = propertyValues == null ? new PropertyValues() : propertyValues;
+    }
+
+    public void setScope(String scope) {
+        this.scope = scope;
+        this.singleton = SCOPE_SINGLETON.equals(scope);
+        this.prototype = SCOPE_PROTOTYPE.equals(scope);
+    }
+
+    public boolean isSingleton() {
+        return singleton;
+    }
+
+    public boolean isPrototype() {
+        return prototype;
     }
 
     public Class getBeanClass() {

@@ -78,6 +78,7 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             String className = bean.getAttribute("class");
             String initMethod = bean.getAttribute("init-method");
             String destroyMethod = bean.getAttribute("destroy-method");
+            String beanScope = bean.getAttribute("scope");
 
             Class<?> clazz = Class.forName(className);
             String beanName = StrUtil.isNotBlank(id) ? id : name;
@@ -88,22 +89,25 @@ public class XmlBeanDefinitionReader extends AbstractBeanDefinitionReader {
             BeanDefinition beanDefinition = new BeanDefinition(clazz);
             beanDefinition.setInitMethodName(initMethod);
             beanDefinition.setDestroyMethodName(destroyMethod);
+            if (StrUtil.isNotEmpty(beanScope)) {
+                beanDefinition.setScope(beanScope);
+            }
 
             for (int j = 0; j < bean.getChildNodes().getLength(); j++) {
-                if (!(childNodes.item(j) instanceof Element)) {
+                if (!(bean.getChildNodes().item(j) instanceof Element)) {
                     continue;
                 }
 
-                if (!("property".equals(childNodes.item(j).getNodeName()))) {
+                if (!("property".equals(bean.getChildNodes().item(j).getNodeName()))) {
                     continue;
                 }
 
-                Element property = (Element) childNodes.item(j);
+                Element property = (Element) bean.getChildNodes().item(j);
                 String attrName = property.getAttribute("name");
                 String attrValue = property.getAttribute("value");
                 String attrRef = property.getAttribute("ref");
                 Object value = StrUtil.isNotEmpty(attrRef) ? new BeanReference(attrRef) : attrValue;
-                PropertyValue propertyValue = new PropertyValue(name, value);
+                PropertyValue propertyValue = new PropertyValue(attrName, value);
                 beanDefinition.getPropertyValues().addPropertyValue(propertyValue);
             }
 
