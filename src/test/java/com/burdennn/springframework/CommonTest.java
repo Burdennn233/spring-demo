@@ -19,6 +19,9 @@ public class CommonTest {
         applicationContext.registerShutdownHook();
         UserService userService = applicationContext.getBean("userService", UserService.class);
         userService.queryUserInfo();
+
+        System.out.println("ApplicationContextAware: " + userService.getApplicationContext());
+        System.out.println("BeanFactory: " + userService.getBeanFactory());
     }
 
     @Test

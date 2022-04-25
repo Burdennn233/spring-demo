@@ -1,9 +1,14 @@
 package com.burdennn.springframework.bean;
 
-import com.burdennn.springframework.beans.factory.DisposableBean;
-import com.burdennn.springframework.beans.factory.InitializingBean;
+import com.burdennn.springframework.beans.BeansException;
+import com.burdennn.springframework.beans.factory.*;
+import com.burdennn.springframework.context.ApplicationContext;
 
-public class UserService implements InitializingBean, DisposableBean {
+public class UserService implements InitializingBean, DisposableBean, BeanNameAware, BeanClassLoaderAware, ApplicationContextAware, BeanFactoryAware {
+
+    private ApplicationContext applicationContext;
+
+    private BeanFactory beanFactory;
 
     private String name;
 
@@ -54,5 +59,33 @@ public class UserService implements InitializingBean, DisposableBean {
     @Override
     public void afterPropertiesSet() throws Exception {
         System.out.println("afterPropertiesSet UserService");
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.applicationContext = applicationContext;
+    }
+
+    @Override
+    public void setBeanClassLoader(ClassLoader classLoader) {
+        System.out.println("ClassLoader is " + classLoader);
+    }
+
+    @Override
+    public void setBeanFactory(BeanFactory beanFactory) throws BeansException {
+        this.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setBeanName(String name) {
+        System.out.println("Bean name is :" + name);
+    }
+
+    public ApplicationContext getApplicationContext() {
+        return applicationContext;
+    }
+
+    public BeanFactory getBeanFactory() {
+        return beanFactory;
     }
 }
