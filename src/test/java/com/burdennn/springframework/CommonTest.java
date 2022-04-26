@@ -1,5 +1,12 @@
 package com.burdennn.springframework;
 
+import com.burdennn.springframework.aop.AdvisedSupport;
+import com.burdennn.springframework.aop.IUserService;
+import com.burdennn.springframework.aop.TargetSource;
+import com.burdennn.springframework.aop.UserServiceInterceptor;
+import com.burdennn.springframework.aop.aspectj.AspectJExpressionPointcut;
+import com.burdennn.springframework.aop.framework.Cglib2AopProxy;
+import com.burdennn.springframework.aop.framework.JdkDynamicAopProxy;
 import com.burdennn.springframework.bean.ProxyBeanFactory;
 import com.burdennn.springframework.bean.UserDao;
 import com.burdennn.springframework.bean.UserService;
@@ -15,6 +22,23 @@ import com.burdennn.springframework.event.CustomEvent;
 import org.junit.Test;
 
 public class CommonTest {
+
+    @Test
+    public void test_aop() {
+        IUserService userService = new com.burdennn.springframework.aop.UserService();
+        AdvisedSupport advisedSupport = new AdvisedSupport();
+        advisedSupport.setTargetSource(new TargetSource(userService));
+        advisedSupport.setMethodInterceptor(new UserServiceInterceptor());
+        advisedSupport.setMethodMatcher(new AspectJExpressionPointcut("execution(* com.burdennn.springframework.aop.IUserService.*(..))"));
+
+        IUserService proxyJDK = (IUserService) new JdkDynamicAopProxy(advisedSupport).getProxy();
+        System.out.println(proxyJDK.queryUserInfo());
+
+        IUserService proxyCglib = (IUserService) new Cglib2AopProxy(advisedSupport).getProxy();
+        System.out.println(proxyCglib.register("burdennn"));
+        System.out.println(proxyCglib.queryUserInfo());
+
+    }
 
     @Test
     public void test_context_xml() {
