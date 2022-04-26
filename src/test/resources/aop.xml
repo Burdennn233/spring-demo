@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+
+<beans>
+    <bean id="userService" class="com.burdennn.springframework.aop.UserService"/>
+
+    <bean class="com.burdennn.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyAdaptor"/>
+
+    <bean id="beforeAdvice" class="com.burdennn.springframework.aop.UserServiceBeforeAdvice"/>
+
+    <bean id="methodInterceptor" class="com.burdennn.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor">
+        <property name="advice" ref="beforeAdvice"/>
+    </bean>
+
+    <bean id="pointcutAdvisor" class="com.burdennn.springframework.aop.aspectj.AspectJExpressionPointcutAdvisor">
+        <property name="expression" value="execution(* com.burdennn.springframework.aop.IUserService.*(..))"/>
+        <property name="advice" ref="methodInterceptor"/>
+    </bean>
+</beans>

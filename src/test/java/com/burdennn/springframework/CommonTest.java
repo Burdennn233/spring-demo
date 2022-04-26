@@ -1,12 +1,11 @@
 package com.burdennn.springframework;
 
-import com.burdennn.springframework.aop.AdvisedSupport;
-import com.burdennn.springframework.aop.IUserService;
-import com.burdennn.springframework.aop.TargetSource;
-import com.burdennn.springframework.aop.UserServiceInterceptor;
+import com.burdennn.springframework.aop.*;
 import com.burdennn.springframework.aop.aspectj.AspectJExpressionPointcut;
 import com.burdennn.springframework.aop.framework.Cglib2AopProxy;
 import com.burdennn.springframework.aop.framework.JdkDynamicAopProxy;
+import com.burdennn.springframework.aop.framework.ProxyFactory;
+import com.burdennn.springframework.aop.framework.adapter.MethodBeforeAdviceInterceptor;
 import com.burdennn.springframework.bean.ProxyBeanFactory;
 import com.burdennn.springframework.bean.UserDao;
 import com.burdennn.springframework.bean.UserService;
@@ -22,6 +21,27 @@ import com.burdennn.springframework.event.CustomEvent;
 import org.junit.Test;
 
 public class CommonTest {
+
+    @Test
+    public void test_xml_before_method() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:aop.xml");
+        IUserService userService = applicationContext.getBean("userService", IUserService.class);
+        System.out.println(userService.queryUserInfo());
+    }
+
+    @Test
+    public void test_before_method() {
+        AdvisedSupport advisedSupport = new AdvisedSupport();
+        advisedSupport.setTargetSource(new TargetSource(new com.burdennn.springframework.aop.UserService()));
+        advisedSupport.setMethodInterceptor(new UserServiceInterceptor());
+        advisedSupport.setMethodMatcher(new AspectJExpressionPointcut("execution(* com.burdennn.springframework.aop.IUserService.*(..))"));
+        UserServiceBeforeAdvice beforeAdvice = new UserServiceBeforeAdvice();
+        MethodBeforeAdviceInterceptor interceptor = new MethodBeforeAdviceInterceptor(beforeAdvice);
+        advisedSupport.setMethodInterceptor(interceptor);
+
+        IUserService proxy = (IUserService) new ProxyFactory(advisedSupport).getProxy();
+        System.out.println(proxy.queryUserInfo());
+    }
 
     @Test
     public void test_aop() {
