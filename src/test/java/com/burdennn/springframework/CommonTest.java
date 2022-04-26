@@ -23,6 +23,13 @@ import org.junit.Test;
 public class CommonTest {
 
     @Test
+    public void test_scan() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-scan.xml");
+        IUserService userService = applicationContext.getBean("userService", IUserService.class);
+        System.out.println(userService.queryUserInfo());
+    }
+
+    @Test
     public void test_xml_before_method() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:aop.xml");
         IUserService userService = applicationContext.getBean("userService", IUserService.class);

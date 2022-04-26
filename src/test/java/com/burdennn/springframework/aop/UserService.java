@@ -1,8 +1,22 @@
 package com.burdennn.springframework.aop;
 
+import com.burdennn.springframework.stereotype.Component;
+
 import java.util.Random;
 
+@Component("userService")
 public class UserService implements IUserService {
+
+    private String token;
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
     @Override
     public String queryUserInfo() {
         try {
@@ -11,7 +25,7 @@ public class UserService implements IUserService {
             throw new RuntimeException(e);
         }
 
-        return "queryUserInfo";
+        return "queryUserInfo with token: " + token;
     }
 
     @Override
