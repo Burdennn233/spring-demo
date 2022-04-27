@@ -1,6 +1,7 @@
 package com.burdennn.springframework.context.annotation;
 
 import cn.hutool.core.util.StrUtil;
+import com.burdennn.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor;
 import com.burdennn.springframework.beans.factory.config.BeanDefinition;
 import com.burdennn.springframework.beans.factory.support.BeanDefinitionRegistry;
 import com.burdennn.springframework.stereotype.Component;
@@ -26,6 +27,8 @@ public class ClassPathBeanDefinitionScanner extends ClassPathScanningCandidateCo
                 registry.registerBeanDefinition(determineBeanName(beanDefinition), beanDefinition);
             }
         }
+
+        registry.registerBeanDefinition("com.burdennn.springframework.beans.factory.annotation.AutowiredAnnotationBeanPostProcessor", new BeanDefinition(AutowiredAnnotationBeanPostProcessor.class));
     }
 
     private String resolveBeanScope(BeanDefinition beanDefinition) {

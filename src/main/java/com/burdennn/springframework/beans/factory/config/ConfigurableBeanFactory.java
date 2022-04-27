@@ -1,6 +1,7 @@
 package com.burdennn.springframework.beans.factory.config;
 
 import com.burdennn.springframework.beans.factory.HierarchicalBeanFactory;
+import com.burdennn.springframework.util.StringValueResolver;
 
 public interface ConfigurableBeanFactory extends HierarchicalBeanFactory,  SingletonBeanRegistry {
 
@@ -11,4 +12,8 @@ public interface ConfigurableBeanFactory extends HierarchicalBeanFactory,  Singl
     void addBeanPostProcessor(BeanPostProcessor beanPostProcessor);
 
     void destroySingletons();
+
+    void addEmbeddedValueResolver(StringValueResolver valueResolver);
+
+    String resolveEmbeddedValue(String value);
 }

@@ -23,6 +23,14 @@ import org.junit.Test;
 public class CommonTest {
 
     @Test
+    public void test_autowire() {
+        ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-autowire.xml");
+        IUserService userService = applicationContext.getBean("userService1", IUserService.class);
+        System.out.println(userService.queryUserInfo());
+        System.out.println(userService.register("burdennn"));
+    }
+
+    @Test
     public void test_scan() {
         ClassPathXmlApplicationContext applicationContext = new ClassPathXmlApplicationContext("classpath:spring-scan.xml");
         IUserService userService = applicationContext.getBean("userService", IUserService.class);
